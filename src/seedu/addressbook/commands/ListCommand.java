@@ -24,7 +24,7 @@ public class ListCommand extends Command {
     }
 
     @Override
-    protected boolean isMutating() {
+    public boolean isMutating() {
     	return false;
     }
 

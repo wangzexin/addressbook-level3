@@ -61,7 +61,7 @@ public abstract class Command {
     /**
      * Return whether the command type mutates data
      */
-    protected abstract boolean isMutating();
+    public abstract boolean isMutating();
     
     public int getTargetIndex() {
         return targetIndex;

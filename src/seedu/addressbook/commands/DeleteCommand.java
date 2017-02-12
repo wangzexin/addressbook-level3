@@ -40,7 +40,7 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    protected boolean isMutating() {
+    public boolean isMutating() {
     	return true;
     }
 
