@@ -188,11 +188,11 @@ public class LogicTest {
     public void execute_list_showsAllPersons() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
-        AddressBook expectedAB = helper.generateAddressBook(false, true);
+        AddressBook expectedAB = addressBook;//helper.generateAddressBook(false, true);
         List<? extends ReadOnlyPerson> expectedList = expectedAB.getAllPersons().immutableListView();
 
         // prepare address book state
-        helper.addToAddressBook(addressBook, false, true);
+        //helper.addToAddressBook(addressBook, false, true);
 
         assertCommandBehavior("list",
                               Command.getMessageForPersonListShownSummary(expectedList),
@@ -264,9 +264,10 @@ public class LogicTest {
         List<Person> lastShownList = helper.generatePersonList(p1, p2);
 
         AddressBook expectedAB = new AddressBook();
-        expectedAB.addPerson(p2);
+        expectedAB = addressBook;
+        //expectedAB.addPerson(p2);
 
-        addressBook.addPerson(p2);
+        //addressBook.addPerson(p2);
         logic.setLastShownList(lastShownList);
 
         assertCommandBehavior("view 1",
@@ -320,9 +321,10 @@ public class LogicTest {
         List<Person> lastShownList = helper.generatePersonList(p1, p2);
 
         AddressBook expectedAB = new AddressBook();
-        expectedAB.addPerson(p1);
+        expectedAB = addressBook;
+        //expectedAB.addPerson(p1);
 
-        addressBook.addPerson(p1);
+        //addressBook.addPerson(p1);
         logic.setLastShownList(lastShownList);
 
         assertCommandBehavior("viewall 2",
