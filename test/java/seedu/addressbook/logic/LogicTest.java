@@ -242,7 +242,8 @@ public class LogicTest {
         helper.addToAddressBook(addressBook, lastShownList);
 
         logic.setLastShownList(lastShownList);
-
+        
+        saveFile.save(addressBook);
         assertCommandBehavior("view 1",
                               String.format(ViewCommand.MESSAGE_VIEW_PERSON_DETAILS, p1.getAsTextHidePrivate()),
                               expectedAB,
@@ -299,7 +300,8 @@ public class LogicTest {
         helper.addToAddressBook(addressBook, lastShownList);
 
         logic.setLastShownList(lastShownList);
-
+        
+        saveFile.save(addressBook);
         assertCommandBehavior("viewall 1",
                             String.format(ViewCommand.MESSAGE_VIEW_PERSON_DETAILS, p1.getAsTextShowAll()),
                             expectedAB,
@@ -412,6 +414,7 @@ public class LogicTest {
         List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
 
+        saveFile.save(addressBook);
         assertCommandBehavior("find KEY",
                                 Command.getMessageForPersonListShownSummary(expectedList),
                                 expectedAB,
@@ -432,6 +435,7 @@ public class LogicTest {
         List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
 
+        saveFile.save(addressBook);
         assertCommandBehavior("find KEY",
                                 Command.getMessageForPersonListShownSummary(expectedList),
                                 expectedAB,
@@ -452,6 +456,7 @@ public class LogicTest {
         List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
 
+        saveFile.save(addressBook);
         assertCommandBehavior("find KEY rAnDoM",
                                 Command.getMessageForPersonListShownSummary(expectedList),
                                 expectedAB,
