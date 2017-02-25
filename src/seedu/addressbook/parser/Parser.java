@@ -1,6 +1,7 @@
 package seedu.addressbook.parser;
 
 import seedu.addressbook.commands.*;
+import seedu.addressbook.commands.UpdateCommand.UpdateWhich;
 import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.*;
@@ -41,6 +42,10 @@ public class Parser {
      */
     public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
+	private String updateString;
+
+	private UpdateWhich updateWhich;
+
     /**
      * Parses user input into command for execution.
      *
@@ -80,6 +85,9 @@ public class Parser {
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
+                
+            case UpdateCommand.COMMAND_WORD:
+            	return prepareUpdate(arguments);
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
@@ -226,5 +234,32 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
 
+    /**
+     * Parses arguments in the context of the update person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareUpdate(String args) {
+    	final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
+        }
+        // keywords delimited by whitespace
+        final String[] keywords = matcher.group("keywords").split("\\s+");
+        final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
+        try {
+        	updateString = matcher.group("email");
+        	updateWhich = UpdateWhich.EMAIL;
+        } catch (Exception ive) {
+        	updateString = matcher.group("phone");
+        	updateWhich = UpdateWhich.PHONE;
+        }
+        return new UpdateCommand(
+        		keywordSet,
+        		updateWhich,
+        		updateString);
+    }
 
 }
