@@ -25,6 +25,9 @@ public class Parser {
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
+    
+    public static final Pattern PRIORITY_ARGS_FORMAT = 
+            Pattern.compile("(?<targetIndex>[^/]+)" + "(?<level>[^/]+)");
 
 
     /**
@@ -74,6 +77,9 @@ public class Parser {
 
             case ViewCommand.COMMAND_WORD:
                 return prepareView(arguments);
+                
+            case SetPriorityCommand.COMMAND_WORD:
+                return preparePriority(arguments);
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
@@ -85,6 +91,13 @@ public class Parser {
             default:
                 return new HelpCommand();
         }
+    }
+
+    private Command preparePriority(String arguments) {
+        final Matcher matcher = PRIORITY_ARGS_FORMAT.matcher(arguments.trim());
+        return new SetPriorityCommand(
+                Integer.parseInt(matcher.group("targerIndex")), 
+                Integer.parseInt(matcher.group("level")));
     }
 
     /**

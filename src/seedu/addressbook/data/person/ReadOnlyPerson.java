@@ -1,5 +1,6 @@
 package seedu.addressbook.data.person;
 
+import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 
@@ -14,12 +15,15 @@ public interface ReadOnlyPerson {
     Email getEmail();
     Address getAddress();
     Priority getPriority();
+    
+    void setPriority(int level) throws IllegalValueException;
 
     /**
      * The returned TagList is a deep copy of the internal TagList,
      * changes on the returned list will not affect the person's internal tags.
      */
     UniqueTagList getTags();
+    void setTags(UniqueTagList replacement);
 
     /**
      * Returns true if the values inside this object is same as those of the other (Note: interfaces cannot override .equals)
@@ -30,7 +34,8 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress()))
+                && other.getPriority().equals(this.getPriority());
     }
 
     /**
@@ -59,6 +64,8 @@ public interface ReadOnlyPerson {
         for (Tag tag : getTags()) {
             builder.append(tag);
         }
+        builder.append(" Priority: ")
+                .append(getPriority());
         return builder.toString();
     }
 
@@ -81,6 +88,8 @@ public interface ReadOnlyPerson {
         for (Tag tag : getTags()) {
             builder.append(tag);
         }
+        builder.append(" Priority: ");
+        builder.append(getPriority());
         return builder.toString();
     }
 

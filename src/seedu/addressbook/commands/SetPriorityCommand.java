@@ -34,8 +34,6 @@ public class SetPriorityCommand extends Command{
 
         } catch (IndexOutOfBoundsException ie) {
             return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        } catch (IllegalValueException e) {
-            return new CommandResult(MESSAGE_INVALID_PRIORITIZE_LEVEL);
         }
     }
     
