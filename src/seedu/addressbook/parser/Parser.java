@@ -88,6 +88,9 @@ public class Parser {
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
                 
+            case VIPCommand.COMMAND_WORD:
+            	return prepareVIP(arguments);
+
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
                 
@@ -202,6 +205,14 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ViewAllCommand.MESSAGE_USAGE));
         }
+    }
+    private Command prepareVIP(String args) {
+    	try {
+    		final int targetIndex = parseArgsAsDisplayedIndex(args);
+    		return new VIPCommand(targetIndex);
+    	} catch (ParseException | NumberFormatException e) {
+    		return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+    	}
     }
 
     
