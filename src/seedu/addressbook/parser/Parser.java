@@ -82,6 +82,9 @@ public class Parser {
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
+                
+            case ViewByTagCommand.COMMAND_WORD:
+            	return prepareViewByTagCommand(arguments);
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
@@ -95,7 +98,8 @@ public class Parser {
         }
     }
 
-    /**
+
+	/**
      * Parses arguments in the context of the add person command.
      *
      * @param args full command args string
@@ -198,6 +202,25 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses arguments in the context of the view by tags command.
+     * 
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareViewByTagCommand(String args) {
+        final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ViewByTagCommand.MESSAGE_USAGE));
+        }
+
+        // keywords delimited by whitespace
+        final String[] keywords = matcher.group("keywords").split("\\s+");
+        final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
+        return new ViewByTagCommand(keywordSet);
+	}
+    
     /**
      * Parses the given arguments string as a single index number.
      *

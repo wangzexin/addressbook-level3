@@ -164,4 +164,15 @@ public class UniqueTagList implements Iterable<Tag> {
     public int hashCode() {
         return internalList.hashCode();
     }
+
+    /**
+     * Retrieves a listing of every word in the tag, in order.
+     */
+    public HashSet<String> getWordsInTags() {
+    	HashSet<String> wordsInTags = new HashSet<String>(); 
+    	for(Tag tag : internalList) {
+    		wordsInTags.add(tag.toSimpleString());
+    	}
+    	return wordsInTags;
+    }
 }
