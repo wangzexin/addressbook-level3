@@ -30,7 +30,7 @@ public class Parser {
 	private static final Pattern UPDATE_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<name>[^/]+)"
                     + " (?<updateWhich>[^/]+)"
-                    + " (?<isPrivate>p?)e/(?<updateString>[^/]+)"); // variable number of tags
+                    + " (?<isPrivate>p?)/(?<updateString>[^/]+)"); // variable number of tags
 
 
     /**

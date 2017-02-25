@@ -7,7 +7,7 @@ import seedu.addressbook.data.person.Phone;
 import java.util.*;
 
 /**
- * Updates all persons in address book whose name contains any of the argument keywords.
+ * Updates the first person in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
 public class UpdateCommand extends Command {
@@ -21,7 +21,7 @@ public class UpdateCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Update the email/phone of one specified person "
             + "and displays them as a list with index numbers.\n\t"
             + "Parameters: KEYWORD [EMAIL/PHONE] [NEW EMAIL or PHONE]...\n\t"
-            + "Example: " + COMMAND_WORD + " alice bob charlie" + " EMAIL" + " blablabla@u.nus.edu";
+            + "Example: " + COMMAND_WORD + " alice bob charlie" + " EMAIL" + " /blablabla@u.nus.edu";
     
     public static final String MESSAGE_PERSON_NOT_FOUND = "This Person is not in the addressbook";
 
