@@ -7,7 +7,7 @@ import seedu.addressbook.data.person.Phone;
 import java.util.*;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
+ * Updates all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
 public class UpdateCommand extends Command {
@@ -30,11 +30,14 @@ public class UpdateCommand extends Command {
 	private UpdateWhich updateWhich;
 
 	private String updateString;
+	
+	private boolean isPrivate;
 
-    public UpdateCommand(Set<String> keywords, UpdateWhich updateWhich, String updateString) {
+    public UpdateCommand(Set<String> keywords, UpdateWhich updateWhich, String updateString, Boolean isPrivate){
         this.keywords = keywords;
         this.updateWhich = updateWhich;
         this.updateString = updateString;
+        this.isPrivate = isPrivate;
     }
 
     /**
@@ -50,12 +53,10 @@ public class UpdateCommand extends Command {
         try {
         	final Person personFound = personsFound.get(0);
             if (updateWhich == UpdateWhich.EMAIL) {
-            	boolean isPrivate = personFound.getEmail().isPrivate();
             	Email email = new Email(updateString, isPrivate);
             	personFound.setEmail(email);
             }
             else {
-            	boolean isPrivate = personFound.getPhone().isPrivate();
             	Phone phone = new Phone(updateString, isPrivate);
             	personFound.setPhone(phone);
             }
