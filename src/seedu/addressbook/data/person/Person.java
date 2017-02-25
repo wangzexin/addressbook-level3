@@ -53,6 +53,14 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address;
     }
+    
+    public void setEmail(Email email) {
+    	this.email = email;
+    }
+
+    public void setPhone(Phone phone) {
+    	this.phone = phone;
+    }
 
     @Override
     public UniqueTagList getTags() {
