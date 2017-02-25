@@ -1,6 +1,8 @@
 package seedu.addressbook.commands;
 
-import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.data.person.Email;
+import seedu.addressbook.data.person.Person;
+import seedu.addressbook.data.person.Phone;
 
 import java.util.*;
 
@@ -20,6 +22,8 @@ public class UpdateCommand extends Command {
             + "and displays them as a list with index numbers.\n\t"
             + "Parameters: KEYWORD [EMAIL/PHONE] [NEW EMAIL or PHONE]...\n\t"
             + "Example: " + COMMAND_WORD + " alice bob charlie" + " EMAIL" + " blablabla@u.nus.edu";
+    
+    public static final String MESSAGE_PERSON_NOT_FOUND = "This Person is not in the addressbook";
 
     private final Set<String> keywords;
 
@@ -42,8 +46,23 @@ public class UpdateCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        final List<ReadOnlyPerson> personsFound = getPersonsWithNameContainingAnyKeyword(keywords);
-        return new CommandResult(getMessageForPersonListShownSummary(personsFound), personsFound);
+        final List<Person> personsFound = getPersonsWithNameContainingAnyKeyword(keywords);
+        try {
+        	final Person personFound = personsFound.get(0);
+            if (updateWhich == UpdateWhich.EMAIL) {
+            	boolean isPrivate = personFound.getEmail().isPrivate();
+            	Email email = new Email(updateString, isPrivate);
+            	personFound.setEmail(email);
+            }
+            else {
+            	boolean isPrivate = personFound.getPhone().isPrivate();
+            	Phone phone = new Phone(updateString, isPrivate);
+            	personFound.setPhone(phone);
+            }
+            return new CommandResult(getMessageForPersonListShownSummary(personsFound), personsFound);
+    	} catch (Exception e){
+    		return new CommandResult(MESSAGE_PERSON_NOT_FOUND);
+    	}
     }
 
     /**
@@ -52,9 +71,9 @@ public class UpdateCommand extends Command {
      * @param keywords for searching
      * @return list of persons found
      */
-    private List<ReadOnlyPerson> getPersonsWithNameContainingAnyKeyword(Set<String> keywords) {
-        final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
-        for (ReadOnlyPerson person : addressBook.getAllPersons()) {
+    private List<Person> getPersonsWithNameContainingAnyKeyword(Set<String> keywords) {
+        final List<Person> matchedPersons = new ArrayList<>();
+        for (Person person : addressBook.getAllPersons()) {
             final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
             if (!Collections.disjoint(wordsInName, keywords)) {
                 matchedPersons.add(person);
@@ -62,5 +81,4 @@ public class UpdateCommand extends Command {
         }
         return matchedPersons;
     }
-
 }
