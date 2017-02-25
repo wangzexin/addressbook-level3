@@ -50,10 +50,6 @@ public class Parser {
      */
     public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-	private String updateString;
-
-	private UpdateWhich updateWhich;
-
     /**
      * Parses user input into command for execution.
      *
@@ -271,6 +267,8 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareUpdate(String args) {
+    	String updateString;
+    	UpdateWhich updateWhich;
     	final Matcher matcher = UPDATE_DATA_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
         if (!matcher.matches()) {
@@ -282,7 +280,7 @@ public class Parser {
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         String updateWhichString = matcher.group("updateWhich");
         updateString = matcher.group("updateString");
-        if (updateWhichString == "EMAIL") {
+        if (updateWhichString.equals("EMAIL")) {
         	updateWhich = UpdateWhich.EMAIL;
         }
         else {
